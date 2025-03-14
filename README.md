@@ -13,11 +13,8 @@ This project implements a Flask web application that predicts the enzyme commiss
 ├── App
 │   ├── app.py
 │   ├── static
-<<<<<<< HEAD
-=======
 │   │   ├── app_screenshot.png
 │   │   ├── confusion_matrix.png
->>>>>>> ccd60d6 (Updated README)
 │   │   ├── protein.jpg
 │   │   └── styles.css
 │   └── templates
