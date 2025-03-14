@@ -101,6 +101,26 @@ The repository is organized into several key directories:
   model.pkl: Serialized machine learning model for enzyme analysis.
   vectorizer.pkl: Preprocessed vectorizer that transforms input data into a format suitable for the model.
 
+5. **Model Overview**
+
+The pre-trained model in this project is designed to classify enzymes based on their biochemical features. Here’s an overview of how it works:
+
+**Input:**
+
+The model expects structured enzyme data as input. This typically includes features such as enzyme identifiers, biochemical properties, or numerical descriptors extracted from experimental data.
+In the provided interactive notebook (bin/model.ipynb), example inputs are preprocessed using the supplied vectorizer (vectorizer.pkl). This step converts raw enzyme information into a feature vector that the model can interpret.
+
+**Output:**
+
+The model outputs a predicted enzyme class. The classification corresponds to one of the major enzyme categories (e.g., oxidoreductases, transferases, hydrolases, lyases, isomerases, or ligases).
+In addition to the class label, the model may also return confidence scores or probabilities for each potential classification. These scores help assess the reliability of the prediction.
+
+**Usage:**
+
+Users can input their enzyme data into the interactive notebook to observe the full classification pipeline—from preprocessing with the vectorizer to generating predictions with the model.
+The notebook provides examples and visualizations that demonstrate how to interpret the input data and understand the model’s output.
+
+
 5. **Documentation**
   Further documentation is available in the Docs folder:
 
