@@ -1,0 +1,38 @@
+body {
+    background-color: #f8f9fa; /* Light gray background */
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #007bff; /* Bright blue header */
+}
+
+h1, h2, h4 {
+    color: #343a40; /* Dark gray for headings */
+}
+
+.form-control {
+    border: 2px solid #007bff; /* Blue border for textarea */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.card {
+    border: 1px solid #007bff; /* Blue border for prediction card */
+}
+
+.alert-danger {
+    border: 1px solid #dc3545; /* Red border for error alert */
+}
+
+img {
+    border-radius: 5px; /* Rounded corners for the image */
+}
