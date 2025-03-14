@@ -83,9 +83,8 @@ Class-specific performance:
 
 ### Prerequisites
 
-- Python 3.8+
-- pip
-
+- Conda (Anaconda or Miniconda)
+- Git
 ### Setup
 
 1. Clone the repository:
@@ -94,18 +93,16 @@ git clone https://github.com/Karudhoru/Enzyme-Classification-Model.git
 cd Enzyme-Classification-Model
 ```
 
-2. Create a virtual environment:
+2. Create the Conda Environment: Navigate to the Environment directory and run:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+conda env create -f Environment/environment.yml
+```
+Then, activate the environment:
+```bash
+conda activate enzyme_classification
 ```
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Update model paths:
+3. Update model paths:
 Edit `app.py` to use relative paths for model files:
 
 ```python
