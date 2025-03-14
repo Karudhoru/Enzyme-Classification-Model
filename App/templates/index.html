@@ -2,88 +2,163 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enzyme Class Predictor</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-primary text-white text-center py-3">
-        <h1>Enzyme Class Predictor</h1>
+    <header class="text-center text-white">
+        <div class="container">
+            <h1><i class="fas fa-dna enzyme-icon"></i>Enzyme Class Predictor</h1>
+            <p class="lead">Predict enzyme classes using machine learning and protein sequences</p>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <div class="container mt-4">
+    <div class="container">
         <div class="row">
             <!-- About Section -->
-            <div class="col-md-6">
-                <section id="about">
-                    <h2>About This App</h2>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <p>This app predicts the enzyme class of a protein sequence using a machine learning model trained on UniProt data.</p>
+            <div class="col-lg-6 mb-4">
+                <div class="main-section about-card">
+                    <h2><i class="fas fa-info-circle mr-2"></i>About This Tool</h2>
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <p>This application uses advanced machine learning to predict the enzyme class of a protein sequence based on models trained with UniProt data.</p>
+                            <p>Simply enter your amino acid sequence and discover which of the six major enzyme classes it belongs to.</p>
+                            <div class="enzyme-classes mt-4">
+                                <h5>Enzyme Classes:</h5>
+                                <div class="enzyme-class-list">
+                                    <p><span class="badge badge-primary">EC 1</span> Oxidoreductases</p>
+                                    <p><span class="badge badge-success">EC 2</span> Transferases</p>
+                                    <p><span class="badge badge-info">EC 3</span> Hydrolases</p>
+                                    <p><span class="badge badge-warning">EC 4</span> Lyases</p>
+                                    <p><span class="badge badge-danger">EC 5</span> Isomerases</p>
+                                    <p><span class="badge badge-dark">EC 6</span> Ligases</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <img src="{{ url_for('static', filename='protein.jpg') }}" alt="Protein Structure" class="img-fluid">
+                        <div class="col-md-5">
+                            <div class="text-center">
+                                <img src="{{ url_for('static', filename='protein.jpg') }}" alt="Protein Structure" class="img-fluid rounded-lg shadow">
+                                <p class="mt-2 text-muted small">Protein 3D structure visualization</p>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
+            
             <!-- Input Form -->
-            <div class="col-md-6">
-                <section id="input-form">
-                    <h2>Enter Protein Sequence</h2>
+            <div class="col-lg-6 mb-4">
+                <div class="main-section">
+                    <h2><i class="fas fa-keyboard mr-2"></i>Enter Protein Sequence</h2>
                     <form action="/predict" method="post">
-                        <div class="form-group">
-                            <textarea name="sequence" id="sequence" class="form-control" rows="5" placeholder="e.g., MVKILFTALL"></textarea>
+                        <div class="form-group sequence-input">
+                            <label for="sequence">Amino Acid Sequence:</label>
+                            <textarea name="sequence" id="sequence" class="form-control" rows="8" placeholder="Enter sequence using standard amino acid codes (e.g., MVKILFTALL)"></textarea>
+                            <small class="form-text text-muted">Valid characters: ACDEFGHIKLMNPQRSTVWY</small>
                         </div>
-                        <button type="button" class="btn btn-secondary" onclick="loadExample()">Try an Example</button>
-                        <input type="submit" class="btn btn-primary" value="Predict">
+                        <div class="form-group d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" onclick="loadExample()">
+                                <i class="fas fa-flask mr-1"></i> Try an Example
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="clearSequence()">
+                                <i class="fas fa-times mr-1"></i> Clear
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search mr-1"></i> Predict Class
+                            </button>
+                        </div>
                     </form>
-                </section>
+                </div>
             </div>
         </div>
 
         <!-- Prediction Output -->
         {% if prediction %}
-        <div class="row mt-4">
-            <div class="col-md-12">
-                {% if prediction.error %}
-                <!-- Error Message -->
-                <div class="alert alert-danger" role="alert">
-                    <h4 class="alert-heading">Error</h4>
-                    <p>{{ prediction.error }}</p>
-                </div>
-                {% else %}
-                <!-- Prediction Results -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Prediction Results</h4>
+        <div class="row">
+            <div class="col-12">
+                <div class="main-section fade-in">
+                    {% if prediction.error %}
+                    <!-- Error Message -->
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading"><i class="fas fa-exclamation-triangle mr-2"></i>Error</h4>
+                        <p>{{ prediction.error }}</p>
                     </div>
-                    <div class="card-body">
-                        <p><strong>Class Number:</strong> {{ prediction.class_number }}</p>
-                        <p><strong>Class Name:</strong> {{ prediction.class_name }}</p>
-                        <p><strong>Major Function:</strong> {{ prediction.major_function }}</p>
+                    {% else %}
+                    <!-- Prediction Results -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><i class="fas fa-chart-pie mr-2"></i>Prediction Results</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="prediction-result">
+                                        <h5>Class Number:</h5>
+                                        <p class="h3 text-primary">EC {{ prediction.class_number }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="prediction-result">
+                                        <h5>Class Name:</h5>
+                                        <p class="h3 text-primary">{{ prediction.class_name }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="prediction-result">
+                                        <h5>Major Function:</h5>
+                                        <p>{{ prediction.major_function }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-3 border-top">
+                                <h5>What does this mean?</h5>
+                                <p>Your protein sequence has been classified as a <strong>{{ prediction.class_name }}</strong> enzyme (EC {{ prediction.class_number }}). These enzymes primarily {{ prediction.major_function|lower }}.</p>
+                            </div>
+                        </div>
                     </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
         {% endif %}
     </div>
 
     <!-- Footer -->
-    <footer class="bg-light text-center py-3 mt-4">
-        <p>&copy; 2023 Enzyme Predictor</p>
+    <footer class="text-center">
+        <div class="container">
+            <p><i class="fas fa-code mr-1"></i> Enzyme Predictor © 2023 | <i class="fas fa-database mr-1"></i> Powered by UniProt Data</p>
+            <p class="small">A machine learning tool for enzyme classification</p>
+        </div>
     </footer>
 
-    <!-- JavaScript for Interactivity -->
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function loadExample() {
             document.getElementById('sequence').value = 'MVKILFTALLFLAVHVQIQTGLSIAK'; // Example sequence
         }
+        
+        function clearSequence() {
+            document.getElementById('sequence').value = '';
+        }
+        
+        // Animation for prediction results
+        document.addEventListener('DOMContentLoaded', function() {
+            const predictionElements = document.querySelectorAll('.fade-in');
+            predictionElements.forEach(function(element) {
+                element.classList.add('show');
+            });
+        });
     </script>
 </body>
 </html>
