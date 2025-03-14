@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enzyme Class Predictor</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white text-center py-3">
+        <h1>Enzyme Class Predictor</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- About Section -->
+            <div class="col-md-6">
+                <section id="about">
+                    <h2>About This App</h2>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>This app predicts the enzyme class of a protein sequence using a machine learning model trained on UniProt data.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="{{ url_for('static', filename='protein.jpg') }}" alt="Protein Structure" class="img-fluid">
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- Input Form -->
+            <div class="col-md-6">
+                <section id="input-form">
+                    <h2>Enter Protein Sequence</h2>
+                    <form action="/predict" method="post">
+                        <div class="form-group">
+                            <textarea name="sequence" id="sequence" class="form-control" rows="5" placeholder="e.g., MVKILFTALL"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="loadExample()">Try an Example</button>
+                        <input type="submit" class="btn btn-primary" value="Predict">
+                    </form>
+                </section>
+            </div>
+        </div>
+
+        <!-- Prediction Output -->
+        {% if prediction %}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                {% if prediction.error %}
+                <!-- Error Message -->
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Error</h4>
+                    <p>{{ prediction.error }}</p>
+                </div>
+                {% else %}
+                <!-- Prediction Results -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Prediction Results</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Class Number:</strong> {{ prediction.class_number }}</p>
+                        <p><strong>Class Name:</strong> {{ prediction.class_name }}</p>
+                        <p><strong>Major Function:</strong> {{ prediction.major_function }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3 mt-4">
+        <p>&copy; 2023 Enzyme Predictor</p>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        function loadExample() {
+            document.getElementById('sequence').value = 'MVKILFTALLFLAVHVQIQTGLSIAK'; // Example sequence
+        }
+    </script>
+</body>
+</html>
