@@ -35,10 +35,16 @@ Our aim is to make advanced enzyme research accessible and reproducible by provi
 
 The repository is organized into several key directories:
 ```plain text
+├── App
+│   ├── app.py
+│   ├── static
+│   │   ├── protein.jpg
+│   │   └── styles.css
+│   └── templates
+│       └── index.html
 ├── Data
 │   └── Enzyme Data.tsv
 ├── Docs
-
 │   └── THEORY.pdf
 ├── Environment
 │   ├── INSTALLATION.pdf
