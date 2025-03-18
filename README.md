@@ -97,7 +97,7 @@ The model was trained on an expanded dataset of protein sequences from UniProt, 
 
 ![ROC Curves](App/static/roc_curves.png)
 
-### Precision-Recaall Curves
+### Precision-Recall Curves
 
 ![Precision-Recall Curves](App/static/precision_recall_curves.png)
 
