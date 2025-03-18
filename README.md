@@ -11,24 +11,26 @@ This project implements a Flask web application that predicts the enzyme commiss
 ## Repository Structure
 ```plain text
 ├── App
-│   ├── app.py
-│   ├── static
-│   │   ├── app_screenshot.png
-│   │   ├── confusion_matrix.png
-│   │   ├── protein.jpg
-│   │   └── styles.css
-│   └── templates
-│       └── index.html
+│   ├── app.py
+│   ├── static
+│   │   ├── app_screenshot.png
+│   │   ├── confusion_matrix.png
+│   │   ├── roc_curves.png
+│   │   ├── pr_curves.png
+│   │   ├── protein.jpg
+│   │   └── styles.css
+│   └── templates
+│       └── index.html
 ├── Data
-│   └── Enzyme Data.tsv
+│   └── Enzyme Data.tsv
 ├── Docs
-│   └── THEORY.pdf
+│   └── THEORY.pdf
 ├── Environment
-│   ├── INSTALLATION.pdf
-│   └── environment.yml
+│   ├── INSTALLATION.pdf
+│   └── environment.yml
 ├── Model
-│   ├── model.pkl
-│   └── vectorizer.pkl
+│   ├── model.pkl
+│   └── vectorizer.pkl
 ├── README.md
 └── bin
     └── model.ipynb
@@ -55,29 +57,49 @@ The model predicts proteins into one of six major enzyme classes:
 
 ## Model Performance
 
-The model was trained on a dataset of 25,000 protein sequences from UniProt, with the following performance metrics:
+The model was trained on an expanded dataset of protein sequences from UniProt, with the following performance metrics:
+
+### Overall Metrics
 
 | Metric | Score |
 |--------|-------|
-| Accuracy | 84.2% |
-| Precision | 83.7% |
-| Recall | 82.9% |
-| F1 Score | 83.3% |
+| Accuracy | 86.5% |
+| Macro Precision | 94.3% |
+| Macro Recall | 78.8% |
+| Macro F1 Score | 85.0% |
+| Average ROC AUC | 98.1% |
 
-Class-specific performance:
+### Class-specific Performance
 
-| Enzyme Class | Precision | Recall | F1 Score |
-|--------------|-----------|--------|----------|
-| EC 1 (Oxidoreductases) | 87.3% | 85.1% | 86.2% |
-| EC 2 (Transferases) | 85.6% | 84.3% | 84.9% |
-| EC 3 (Hydrolases) | 82.7% | 81.9% | 82.3% |
-| EC 4 (Lyases) | 82.1% | 79.8% | 80.9% |
-| EC 5 (Isomerases) | 81.4% | 80.7% | 81.0% |
-| EC 6 (Ligases) | 83.2% | 85.7% | 84.4% |
+| Enzyme Class | Precision | Recall | F1 Score | ROC AUC | Support |
+|--------------|-----------|--------|----------|---------|---------|
+| EC 1 (Oxidoreductases) | 100.0% | 75.7% | 86.2% | 98.1% | 445 |
+| EC 2 (Transferases) | 80.3% | 95.5% | 87.2% | 97.8% | 1308 |
+| EC 3 (Hydrolases) | 88.3% | 84.4% | 86.3% | 98.0% | 1002 |
+| EC 4 (Lyases) | 100.0% | 67.5% | 80.6% | 98.2% | 117 |
+| EC 5 (Isomerases) | 99.1% | 82.7% | 90.2% | 98.6% | 133 |
+| EC 6 (Ligases) | 98.8% | 66.9% | 79.8% | 97.8% | 118 |
 
 ### Confusion Matrix
 
+```
+[[ 337   84   24    0    0    0]
+ [   1 1249   56    0    1    1]
+ [   0  156  846    0    0    0]
+ [   0   28   10   79    0    0]
+ [   0   14    9    0  110    0]
+ [   0   25   14    0    0   79]]
+```
+
 ![Confusion Matrix](App/static/confusion_matrix.png)
+
+### ROC Curves
+
+![ROC Curves](App/static/roc_curves.png)
+
+### Precision-Recaall Curves
+
+![Precission-Recall Curves](App/static/precision_recall_curves.png)
 
 ## Installation
 
@@ -137,11 +159,44 @@ http://127.0.0.1:5000/
 
 The model was trained using the following approach:
 
-1. **Data collection**: 50,000 protein sequences were collected from UniProt, with labels for their EC class
+1. **Data collection**: Protein sequences were collected from UniProt, with labels for their EC class
 2. **Feature extraction**: Each protein sequence was converted to k-mer (tripeptide) frequency features
 3. **Model selection**: Multiple classification algorithms were tested, including Random Forest, SVM, and Gradient Boosting
 4. **Hyperparameter tuning**: Grid search was used to optimize model parameters
 5. **Validation**: 5-fold cross-validation was performed to evaluate model performance
+
+### Model Evaluation Script
+
+The model evaluation script imports comprehensive metrics packages and calculates detailed performance metrics:
+
+```python
+# Import required metrics from sklearn
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from sklearn.metrics import precision_score, recall_score
+from sklearn.metrics import classification_report, roc_auc_score, roc_curve
+from sklearn.metrics import precision_recall_curve, average_precision_score, auc
+
+# Calculate basic metrics
+accuracy = accuracy_score(y_test, y_pred)
+precision_macro = precision_score(y_test, y_pred, average='macro')
+recall_macro = recall_score(y_test, y_pred, average='macro')
+f1_macro = f1_score(y_test, y_pred, average='macro')
+
+# Generate detailed classification report
+class_report = classification_report(y_test, y_pred)
+
+# Calculate ROC AUC for each class
+# Generate visualizations for analysis
+```
+
+### Performance Analysis
+
+The model shows excellent precision for most enzyme classes, but recall varies more significantly:
+
+- **High Precision Classes**: EC 1, EC 4, EC 5, and EC 6 all have precision values above 98%
+- **Balanced Classes**: EC 3 (Hydrolases) shows the most balanced performance between precision and recall
+- **Class Imbalance**: The dataset contains significantly more examples of EC 2 and EC 3 classes
+- **ROC Performance**: All classes show excellent ROC AUC scores above 97.8%, indicating strong discriminative ability
 
 ### Prediction Process
 
@@ -162,7 +217,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
 
 ## Contact
 
