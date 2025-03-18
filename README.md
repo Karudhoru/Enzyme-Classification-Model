@@ -11,26 +11,27 @@ This project implements a Flask web application that predicts the enzyme commiss
 ## Repository Structure
 ```plain text
 ├── App
-│   ├── app.py
-│   ├── static
-│   │   ├── app_screenshot.png
-│   │   ├── confusion_matrix.png
-│   │   ├── roc_curves.png
-│   │   ├── pr_curves.png
-│   │   ├── protein.jpg
-│   │   └── styles.css
-│   └── templates
-│       └── index.html
+│   ├── app.py
+│   ├── static
+│   │   ├── app_screenshot.png
+│   │   ├── confusion_matrix.png
+│   │   ├── precision_recall_curves.png
+│   │   ├── protein.jpg
+│   │   ├── roc_curves.png
+│   │   └── styles.css
+│   └── templates
+│       └── index.html
 ├── Data
-│   └── Enzyme Data.tsv
+│   ├── Enzyme Data New.tsv
+│   └── Enzyme Data.tsv
 ├── Docs
-│   └── THEORY.pdf
+│   └── THEORY.pdf
 ├── Environment
-│   ├── INSTALLATION.pdf
-│   └── environment.yml
+│   ├── INSTALLATION.pdf
+│   └── environment.yml
 ├── Model
-│   ├── model.pkl
-│   └── vectorizer.pkl
+│   ├── model.pkl
+│   └── vectorizer.pkl
 ├── README.md
 └── bin
     └── model.ipynb
