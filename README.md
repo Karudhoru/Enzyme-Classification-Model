@@ -99,7 +99,7 @@ The model was trained on an expanded dataset of protein sequences from UniProt, 
 
 ### Precision-Recaall Curves
 
-![Precission-Recall Curves](App/static/precision_recall_curves.png)
+![Precision-Recall Curves](App/static/precision_recall_curves.png)
 
 ## Installation
 
