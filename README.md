@@ -111,7 +111,7 @@ The model was trained on an expanded dataset of protein sequences from UniProt, 
       <img src="App/static/roc_curves.png" alt="ROC Curves" width="100%">
     </div>
   </div>
-  <div style="margin-top: 20px;">
+  <div style="flex: 10px;">
     <h4>Precision-Recall Curves</h4>
     <img src="App/static/precision_recall_curves.png" alt="Precision-Recall Curves" width="50%">
   </div>
@@ -180,32 +180,6 @@ The model was trained using the following approach:
 3. **Model selection**: Multiple classification algorithms were tested, including Random Forest, SVM, and Gradient Boosting
 4. **Hyperparameter tuning**: Grid search was used to optimize model parameters
 5. **Validation**: 5-fold cross-validation was performed to evaluate model performance
-
-### Model Evaluation
-
-<details>
-<summary>Click to view evaluation code</summary>
-
-```python
-# Import required metrics from sklearn
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from sklearn.metrics import precision_score, recall_score
-from sklearn.metrics import classification_report, roc_auc_score, roc_curve
-from sklearn.metrics import precision_recall_curve, average_precision_score, auc
-
-# Calculate basic metrics
-accuracy = accuracy_score(y_test, y_pred)
-precision_macro = precision_score(y_test, y_pred, average='macro')
-recall_macro = recall_score(y_test, y_pred, average='macro')
-f1_macro = f1_score(y_test, y_pred, average='macro')
-
-# Generate detailed classification report
-class_report = classification_report(y_test, y_pred)
-
-# Calculate ROC AUC for each class
-# Generate visualizations for analysis
-```
-</details>
 
 ### Performance Analysis
 
