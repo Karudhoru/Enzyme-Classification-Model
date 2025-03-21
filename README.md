@@ -177,9 +177,8 @@ The model was trained using the following approach:
 
 1. **Data collection**: Protein sequences were collected from UniProt, with labels for their EC class
 2. **Feature extraction**: Each protein sequence was converted to k-mer (tripeptide) frequency features
-3. **Model selection**: Multiple classification algorithms were tested, including Random Forest, SVM, and Gradient Boosting
-4. **Hyperparameter tuning**: Grid search was used to optimize model parameters
-5. **Validation**: 5-fold cross-validation was performed to evaluate model performance
+3. **Model selection**: RandomForestClassification was used to train this model 
+4. **Validation**: Confusion matrix, ROC-AUC curve and Precision-Recall curve plotted to evaluate model performance
 
 ### Performance Analysis
 
