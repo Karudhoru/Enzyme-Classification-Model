@@ -112,7 +112,7 @@ The model was trained on an expanded dataset of protein sequences from UniProt, 
     </div>
   </div>
   <div style="flex: 10px;">
-    <h4>Precision-Recall Curves</h4>
+    <h4>**Precision-Recall Curves**</h4>
     <img src="App/static/precision_recall_curves.png" alt="Precision-Recall Curves" width="100%">
   </div>
 </div>
